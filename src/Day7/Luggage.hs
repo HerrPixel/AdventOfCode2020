@@ -1,8 +1,5 @@
 module Day7.Luggage (part1, part2) where
 
-import Control.Monad.State
-import Data.Char (isDigit)
-import Data.List (nub)
 import Data.Map (Map, fromList)
 import Data.Map qualified as Map
 import Data.Maybe (mapMaybe)
@@ -22,14 +19,14 @@ part2 = do
 
 parseInput :: IO (Map String [(Int, String)])
 parseInput = do
-  file <- readFile "Day6/input.txt"
+  file <- readFile "Day7/input.txt"
   return (fromList (mapMaybe parseLine (lines file)))
 
 -- getValidContainers :: String -> Map String [(Int,String)] -> [String]
 -- getValidContainers bag rules =
 
--- canContainBag :: String -> String -> Map String [(Int,String)] -> Map String Bool -> (Bool,Map String Bool)
--- canContainBag bag targetBag rules memory =
+--canContainBag :: String -> String -> Map String [(Int,String)] -> Map (String,String) Bool -> (Bool,Map String Bool)
+--canContainBag bag targetBag rules memory = 
 
 parseLine :: String -> Maybe (String, [(Int, String)])
 parseLine line =
