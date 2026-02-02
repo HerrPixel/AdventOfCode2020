@@ -10,12 +10,14 @@ data State = State {pointer :: Int, accumulator :: Int}
 
 data Instructions = NOP Int | ACC Int | JMP Int
 
+-- check previously encountered states by caching them, the moment we hit a cache entry, return the last state
 part1 :: IO String
 part1 = do
   input <- parseInput
   let firstRepeat = firstRepeated input
   return (show (accumulator firstRepeat))
 
+-- test each instruction inverted if the programm exits and return the last state of the first inversion that exits
 part2 :: IO String
 part2 = do
   input <- parseInput
@@ -38,6 +40,8 @@ parseInput = do
           ('+' : rest) -> read rest
           _ -> read i
 
+-- runs one line of instructions given by the pointer value of state
+-- returns Nothing if the pointer is outside of the instruction bounds
 run :: State -> Seq Instructions -> Maybe State
 run state instructions = do
   inst <- Seq.lookup (pointer state) instructions
@@ -48,19 +52,22 @@ run state instructions = do
         JMP i -> state {pointer = pointer state + i}
     )
 
+-- Returns the last state before a repeated instruction or the last state before the programm exists
 firstRepeated :: Seq Instructions -> State
 firstRepeated instructions = go Set.empty (State 0 0)
   where
     go seenStates state =
-      maybe state step (run state instructions)
+      maybe state step (run state instructions) -- Return last state if we ran out of instructions
       where
-        step newState
+        step newState -- otherwise, check cache for already encountered states or continue running otherwise
           | pointer newState `Set.member` seenStates = state
           | otherwise = go (pointer newState `Set.insert` seenStates) newState
 
+-- Flips the instruction at the specified index position and tests if the programm exits this way
 isTerminatingAfterDecorruption :: Seq Instructions -> Int -> Bool
 isTerminatingAfterDecorruption instructions indexToChange = pointer (firstRepeated (decorrupt instructions indexToChange)) >= length instructions
 
+-- Flip the instruction at the specified position
 decorrupt :: Seq Instructions -> Int -> Seq Instructions
 decorrupt instructions index = adjust flipInstruction index instructions
   where

@@ -3,9 +3,11 @@ module Day4.Passports (part1, part2) where
 import Data.Char (isDigit)
 import Data.Maybe (isJust)
 
+-- Create half filled passports from the input data and check that each attribute is filled
 part1 :: IO String
 part1 = show . count isValid1 <$> parseInput
 
+-- Same as in Part1 but also checks the attribute specific conditions
 part2 :: IO String
 part2 = show . count isValid2 <$> parseInput
 
@@ -20,6 +22,7 @@ data Passport = Passport {byr :: Maybe Int, iyr :: Maybe Int, eyr :: Maybe Int, 
 emptyPassPort :: Passport
 emptyPassPort = Passport Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing
 
+-- Fills an empty passport with an unsorted list of attributes and values
 fillPassport :: [String] -> Passport
 fillPassport = foldl fill emptyPassPort
   where

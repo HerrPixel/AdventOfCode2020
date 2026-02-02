@@ -3,11 +3,13 @@ module Day3.Airplane (part1, part2) where
 import Data.Vector (Vector, fromList, (!))
 import Data.Vector qualified as V (head)
 
+-- We precalculate every hit position and count the number of trees along that line
 part1 :: IO String
 part1 = do
   grid <- parseInput
   return $ show (hitTrees grid 3 1)
 
+-- Same as in part 1 just with more slopes, we multiply the results
 part2 :: IO String
 part2 = do
   grid <- parseInput
@@ -30,18 +32,21 @@ type SlopeX = Int
 
 type SlopeY = Int
 
+-- Return a list of grid positions that would be checked with the given slopes
 linePositions :: Grid -> SlopeX -> SlopeY -> [(Int, Int)]
 linePositions grid dx dy = descent (0, 0)
   where
     height = length grid
     width = length (V.head grid)
 
+    -- add dx and dy until y has reached the bottom of the grid, use modulo to keep x within bounds
     descent (x, y)
       | y >= height = []
       | otherwise = (x, y) : descent ((x + dx) `mod` width, y + dy)
 
+-- Number of trees hit with the given slope
 hitTrees :: Grid -> SlopeX -> SlopeY -> Int
-hitTrees grid dx dy = treesHit
+hitTrees grid dx dy = treesHit -- map the positions to booleans denoting if there is a tree at that spot and count the number of hits
   where
     positions = linePositions grid dx dy
     treesHit = length $ filter id $ map (\(x, y) -> grid ! y ! x) positions
