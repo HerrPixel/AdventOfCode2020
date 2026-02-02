@@ -6,7 +6,8 @@ import Day3.Airplane (part1, part2)
 import Day4.Passports (part1, part2)
 import Day5.Boarding (part1, part2)
 import Day6.Questionaire (part1, part2)
-import Day7.Luggage (part1, part2)
+-- import Day7.Luggage (part1, part2)
+import Day8.Console (part1, part2)
 import System.Directory (setCurrentDirectory)
 
 solutions :: [(String, IO String, IO String)]
@@ -17,7 +18,8 @@ solutions =
     ("Day 4: Passport Processing", Day4.Passports.part1, Day4.Passports.part2),
     ("Day 5: Binary Boarding", Day5.Boarding.part1, Day5.Boarding.part2),
     ("Day 6: Custom Customs", Day6.Questionaire.part1, Day6.Questionaire.part2),
-    ("Day 7: Handy Haversacks", Day7.Luggage.part1, Day7.Luggage.part2)
+    -- ("Day 7: Handy Haversacks", Day7.Luggage.part1, Day7.Luggage.part2)
+    ("Day 8: Handheld Halting", Day8.Console.part1, Day8.Console.part2)
   ]
 
 displaySolution :: (String, IO String, IO String) -> IO ()
