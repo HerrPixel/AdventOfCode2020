@@ -5,6 +5,7 @@ import Day1.Expenses (part1, part2)
 
 import Day10.Adapters (part1, part2)
 import Day11.Seats (part1, part2)
+import Day12.Navigation (part1, part2)
 import Day2.Passwords (part1, part2)
 import Day3.Airplane (part1, part2)
 import Day4.Passports (part1, part2)
@@ -26,7 +27,8 @@ solutions =
     ("Day 8: Handheld Halting", Day8.Console.part1, Day8.Console.part2),
     ("Day 9: Encoding Error", Day9.Encryption.part1, Day9.Encryption.part2),
     ("Day 10: Adapter Array", Day10.Adapters.part1, Day10.Adapters.part2),
-    ("Day 11: Seating System", Day11.Seats.part1, Day11.Seats.part2)
+    ("Day 11: Seating System", Day11.Seats.part1, Day11.Seats.part2),
+    ("Day 12: Rain Risk", Day12.Navigation.part1, Day12.Navigation.part2)
   ]
 
 displaySolution :: (String, IO String, IO String) -> IO ()
